@@ -177,11 +177,13 @@ export default function CreatePost() {
       console.log("📤 Sending request to webhook:");
       console.log("URL:", webhookUrl);
       console.log("Payload:", requestPayload);
-      
-      const response = await fetch(webhookUrl, {
+
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-post`;
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify(requestPayload)
       });
@@ -260,14 +262,16 @@ export default function CreatePost() {
         changeRequest: changeRequest
       };
       
-      const response = await fetch(webhookUrl, {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-post`;
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify(requestPayload)
       });
-      
+
       console.log("📥 Resubmit response:", {
         status: response.status,
         statusText: response.statusText
@@ -538,10 +542,12 @@ export default function CreatePost() {
     
     setIsLoadingAiSuggestions(true);
     try {
-      const response = await fetch(askAiWebhookUrl, {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ask-ai`;
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify({
           action: "suggest_topics",

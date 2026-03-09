@@ -116,17 +116,15 @@ export default function LeadMagnet() {
       };
 
       console.log("Sending webhook data:", webhookData);
-      
-      if (!leadMagnetWebhookUrl) {
-        throw new Error("Lead magnet webhook URL not configured");
-      }
 
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/lead-magnet`;
       const response = await fetch(
-        leadMagnetWebhookUrl,
+        apiUrl,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
           },
           body: JSON.stringify(webhookData),
         }
@@ -183,16 +181,14 @@ export default function LeadMagnet() {
         changeRequest: changeRequest,
       };
 
-      if (!leadMagnetWebhookUrl) {
-        throw new Error("Lead magnet webhook URL not configured");
-      }
-
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/lead-magnet`;
       const response = await fetch(
-        leadMagnetWebhookUrl,
+        apiUrl,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
           },
           body: JSON.stringify(webhookData),
         }
