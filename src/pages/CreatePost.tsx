@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Copy, Calendar, Edit, Loader2, Settings, CheckCircle, Clock, Sparkles, Send, Save, BookOpen, Eye } from "lucide-react";
+import { Copy, Calendar, CreditCard as Edit, Loader as Loader2, Settings, CircleCheck as CheckCircle, Clock, Sparkles, Send, Save, BookOpen, Eye } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
