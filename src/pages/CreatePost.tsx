@@ -85,18 +85,8 @@ export default function CreatePost() {
   const [isScheduling, setIsScheduling] = useState(false);
   const [selectedTime, setSelectedTime] = useState("12:00");
   
-  const webhookUrl = import.meta.env.VITE_WEBHOOK_URL;
-  const askAiWebhookUrl = import.meta.env.VITE_ASK_AI_WEBHOOK_URL;
-  
-  // Debug: Log webhook URLs to console
-  console.log("🔍 Debug Info:");
-  console.log("Main Webhook URL:", webhookUrl);
-  console.log("Ask AI Webhook URL:", askAiWebhookUrl);
-  console.log("Environment check:", {
-    NODE_ENV: import.meta.env.NODE_ENV,
-    MODE: import.meta.env.MODE,
-    DEV: import.meta.env.DEV
-  });
+  const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || '';
+  const askAiWebhookUrl = import.meta.env.VITE_ASK_AI_WEBHOOK_URL || '';
 
   const { toast } = useToast();
   
