@@ -16,6 +16,8 @@ Deno.serve(async (req: Request) => {
 
   try {
     const webhookUrl = Deno.env.get("ASK_AI_WEBHOOK_URL");
+    console.log("Webhook URL:", webhookUrl ? "configured" : "not configured");
+
     if (!webhookUrl) {
       return new Response(
         JSON.stringify({ error: "Webhook URL not configured" }),
@@ -27,6 +29,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const body = await req.json();
+    console.log("Request body:", JSON.stringify(body));
 
     const response = await fetch(webhookUrl, {
       method: "POST",
@@ -36,16 +39,31 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify(body),
     });
 
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Webhook error response:", errorText);
+      return new Response(
+        JSON.stringify({ error: `Webhook returned ${response.status}`, details: errorText }),
+        {
+          status: response.status,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
     const data = await response.json();
+    console.log("Webhook response received");
 
     return new Response(JSON.stringify(data), {
-      status: response.status,
+      status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error.message || "Unknown error" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
